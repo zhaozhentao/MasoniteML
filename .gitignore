@@ -10,3 +10,4 @@ package-lock.json
 !.env.testing
 noorator
 storage/logs
+storage/uploads

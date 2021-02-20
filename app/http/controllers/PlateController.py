@@ -1,5 +1,5 @@
 """A PlateController Module."""
-
+from masonite import Upload
 from masonite.controllers import Controller
 from masonite.request import Request
 
@@ -17,5 +17,11 @@ class PlateController(Controller):
         """
         self.request = request
 
-    def store(self, request: Request, ai: DLModelProvider):
-        return {"hello": ai.count()}
+    def store(self, request: Request, upload: Upload, ai: DLModelProvider):
+        filename = 'img.png'
+
+        upload.driver('disk').store(request.input('image'), filename=filename)
+
+        plate = ai.predict(filename)
+
+        return {'plate': plate}
