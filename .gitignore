@@ -11,3 +11,4 @@ package-lock.json
 noorator
 storage/logs
 storage/uploads
+*.h5
