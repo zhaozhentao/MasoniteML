@@ -3,6 +3,8 @@
 from masonite.controllers import Controller
 from masonite.request import Request
 
+from app.providers.DLModelProvider import DLModelProvider
+
 
 class PlateController(Controller):
     """PlateController Controller Class."""
@@ -15,6 +17,5 @@ class PlateController(Controller):
         """
         self.request = request
 
-
-    def store(self):
-        return {"hello": "z"}
+    def store(self, request: Request, ai: DLModelProvider):
+        return {"hello": ai.count()}
