@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import tensorflow as tf
 from masonite.provider import ServiceProvider
+import time
 
 from config import storage
 
@@ -104,6 +105,7 @@ class DLModelProvider(ServiceProvider):
         self.__storage_location = storage.DRIVERS['disk']['location']
 
     def predict(self, filename):
+        begin = time.time()
         img = tf.io.read_file(self.__storage_location + '/' + filename)
         img = tf.image.decode_jpeg(img, channels=3)
         img = tf.image.resize(img, [416, 416])
@@ -122,4 +124,5 @@ class DLModelProvider(ServiceProvider):
         for cs in plate_chars:
             plate.append(index_to_char[np.argmax(cs)])
 
+        print('识别耗时:{}'.format(time.time() - begin))
         return ''.join(plate)
